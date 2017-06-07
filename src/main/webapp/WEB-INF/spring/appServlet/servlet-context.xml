@@ -13,6 +13,8 @@
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
 
+	<context:component-scan base-package="com.journaldev.spring, com.anthem.techfest" />
+
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
 		up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
@@ -34,14 +36,14 @@
 		<beans:property name="password" value="" />
 	</beans:bean> -->
 	
-	<beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+	 <beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<beans:property name="driverClassName" value="org.h2.Driver" />
 		<beans:property name="url"
 			value="jdbc:h2:tcp://localhost/~/test" />
 		<beans:property name="username" value="sa" />
 		<beans:property name="password" value="" />
-	</beans:bean>
+	</beans:bean> 
 	
 	
 	<!-- Hibernate 4 SessionFactory Bean definition -->
@@ -50,7 +52,9 @@
 		<beans:property name="dataSource" ref="dataSource" />
 		<beans:property name="annotatedClasses">
 			<beans:list>
-				<beans:value>com.journaldev.spring.model.Person</beans:value>
+				<beans:value>com.journaldev.spring.model.AppUser</beans:value>
+				<beans:value>com.anthem.techfest.model.Demand</beans:value>
+				<beans:value>com.anthem.techfest.model.Supply</beans:value>
 			</beans:list>
 		</beans:property>
 		<beans:property name="hibernateProperties">
@@ -62,13 +66,27 @@
 		</beans:property>
 	</beans:bean>
 	
-	<beans:bean id="personDAO" class="com.journaldev.spring.dao.PersonDAOImpl">
+	<beans:bean id="appUserDAO" class="com.journaldev.spring.dao.AppUserDAOImpl">
 		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
-	<beans:bean id="personService" class="com.journaldev.spring.service.PersonServiceImpl">
-		<beans:property name="personDAO" ref="personDAO"></beans:property>
+	<beans:bean id="appUserService" class="com.journaldev.spring.service.AppUserServiceImpl">
+		<beans:property name="appUserDAO" ref="appUserDAO"></beans:property>
 	</beans:bean>
-	<context:component-scan base-package="com.journaldev.spring" />
+	
+	<beans:bean id="demandDAO" class="com.anthem.techfest.dao.DemandDAOImpl">
+		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	<beans:bean id="demandService" class="com.anthem.techfest.service.DemandServiceImpl">
+		<beans:property name="demandDAO" ref="demandDAO"></beans:property>
+	</beans:bean>
+	
+	<beans:bean id="supplyDAO" class="com.anthem.techfest.dao.SupplyDAOImpl">
+		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	<beans:bean id="supplyService" class="com.anthem.techfest.service.SupplyServiceImpl">
+		<beans:property name="supplyDAO" ref="supplyDAO"></beans:property>
+	</beans:bean>
+	
 	
 	<tx:annotation-driven transaction-manager="transactionManager"/>
 	
