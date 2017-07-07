@@ -22,17 +22,22 @@ public class SupplyDAOImpl implements SupplyDAO{
 	}
 
 	@Override
-	public void addSupply(Supply d) {
+	public void addSupply(Supply s) {
 		Session session = this.sessionFactory.getCurrentSession();
-		session.persist(d);
-		logger.info("Supply saved successfully, Supply Details="+d);
+		
+		if(session.contains(s.getDemand())) session.update(s.getDemand());
+		else session.merge(s.getDemand());
+		
+		session.persist(s);
+		
+		logger.info("Supply saved successfully, Supply Details="+s);
 	}
 
 	@Override
-	public void updateSupply(Supply d) {
+	public void updateSupply(Supply s) {
 		Session session = this.sessionFactory.getCurrentSession();
-		session.update(d);
-		logger.info("Supply updated successfully, Supply Details="+d);
+		session.update(s);
+		logger.info("Supply updated successfully, Supply Details="+s);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -57,11 +62,11 @@ public class SupplyDAOImpl implements SupplyDAO{
 	@Override
 	public void removeSupply(int id) {
 		Session session = this.sessionFactory.getCurrentSession();
-		Supply d = (Supply) session.load(Supply.class, new Integer(id));
-		if(null != d){
-			session.delete(d);
+		Supply s = (Supply) session.load(Supply.class, new Integer(id));
+		if(null != s){
+			session.delete(s);
 		}
-		logger.info("Supply deleted successfully, Supply details="+d);
+		logger.info("Supply deleted successfully, Supply details="+s);
 	}
 
 }

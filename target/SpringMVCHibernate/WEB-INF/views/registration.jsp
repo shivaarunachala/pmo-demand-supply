@@ -29,8 +29,10 @@
 <body>
 
 <div class="container">
+	
+	<c:url var="addAction" value="/appUser/add" ></c:url>
 
-    <form:form method="POST" modelAttribute="userForm" class="form-signin">
+    <form:form method="POST" modelAttribute="userForm" action="${addAction}"  class="form-signin">
         <h2 class="form-signin-heading">Create your account</h2>
         <spring:bind path="enterpriseid">
             <div class="form-group ${status.error ? 'has-error' : ''}">

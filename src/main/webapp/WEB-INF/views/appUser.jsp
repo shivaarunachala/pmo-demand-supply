@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ page session="false" %>
 <html>
 <head>
@@ -11,6 +12,7 @@
 		.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#f0f0f0;}
 		.tg .tg-4eph{background-color:#f9f9f9}
 	</style>
+	
 </head>
 <body>
 <h1>
@@ -133,6 +135,10 @@
 			<td>${appUser.role}</td>
 			
 			<td><a href="<c:url value='/editAppUser/${appUser.enterpriseid}' />" >Edit</a></td>
+			<sec:authorize access="hasAnyRole('ROLE_PMO')"> 
+				<td><a href="<c:url value='/enableAppUser/${appUser.enterpriseid}' />" >Enable</a></td>
+				<td><a href="<c:url value='/approveAppUser/${appUser.enterpriseid}' />" >Approve</a></td>
+			</sec:authorize>
 			<td><a href="<c:url value='/removeAppUser/${appUser.enterpriseid}' />" >Delete</a></td>
 		</tr>
 	</c:forEach>

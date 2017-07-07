@@ -72,10 +72,22 @@
             </div>
         </spring:bind>
 
+
+
+			
+			
         <spring:bind path="role">
             <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:input type="text" path="role" class="form-control" placeholder="Role"></form:input>
-                <form:errors path="role"></form:errors>
+            
+            <form:select path="role" class="form-control" placeholder="Role">
+				<form:option value="ROLE_PMO" label ="ROLE_PMO"/>
+				<form:option value="ROLE_MGR" label ="ROLE_MGR"/>
+				<form:option value="ROLE_LEAD" label ="ROLE_LEAD"/>
+			</form:select>
+			
+			
+                <%-- <form:input type="text" path="role" class="form-control" placeholder="Role"></form:input>
+                <form:errors path="role"></form:errors> --%>
             </div>
         </spring:bind>
 

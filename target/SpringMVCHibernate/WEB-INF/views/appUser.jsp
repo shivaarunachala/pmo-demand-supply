@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ page session="false" %>
 <html>
 <head>
@@ -133,6 +134,9 @@
 			<td>${appUser.role}</td>
 			
 			<td><a href="<c:url value='/editAppUser/${appUser.enterpriseid}' />" >Edit</a></td>
+			<sec:authorize access="hasAnyRole('ROLE_PMO')"> 
+				<td><a href="<c:url value='/enableAppUser/${appUser.enterpriseid}' />" >Enable</a></td>
+			</sec:authorize>
 			<td><a href="<c:url value='/removeAppUser/${appUser.enterpriseid}' />" >Delete</a></td>
 		</tr>
 	</c:forEach>

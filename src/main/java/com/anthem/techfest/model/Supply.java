@@ -2,10 +2,14 @@ package com.anthem.techfest.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 /**
  * Entity bean with JPA annotations
  * Hibernate provides JPA implementation
@@ -18,6 +22,7 @@ import javax.persistence.Table;
 
 public class Supply {
 	
+
 	@Id
 	@Column(name="id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -30,6 +35,24 @@ public class Supply {
 	private boolean profileRejected;
 	private String feedback;
 	
+	@ManyToOne(fetch = FetchType.EAGER) 
+	@JoinColumn(name = "demandid") 
+	private Demand demand;
+	
+	public Supply() {
+		super();
+		this.demand = new Demand();
+	}
+	
+	
+	public Demand getDemand() {
+		return demand;
+	}
+
+	public void setDemand(Demand demand) {
+		this.demand = demand;
+	}
+
 	public int getId() {
 		return id;
 	}

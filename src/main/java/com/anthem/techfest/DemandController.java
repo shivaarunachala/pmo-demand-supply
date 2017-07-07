@@ -32,13 +32,12 @@ public class DemandController {
 	@RequestMapping(value = "/demands", method = RequestMethod.GET)
 	public String listDemands(Model model) {
 		model.addAttribute("demand", new Demand());
-		model.addAttribute("listDemands", this.demandService.listDemands());
 		return "demand";
 	}
 	
 	//For add and update demand both
 	@RequestMapping(value= "/demand/add", method = RequestMethod.POST)
-	public String addDemand(@ModelAttribute("demand") Demand d){
+	public String addDemand(@ModelAttribute("demand") Demand d, Model model){
 		
 		if(d.getId() == 0){
 			//new demand, add it
@@ -47,9 +46,7 @@ public class DemandController {
 			//existing demand, call update
 			this.demandService.updateDemand(d);
 		}
-		
-		return "redirect:/demands";
-		
+		return "redirect:/demandList";		
 	}
 	
 	@RequestMapping("/removeDemand/{id}")
@@ -68,16 +65,29 @@ public class DemandController {
     @RequestMapping("/viewDemand/{id}")
     public String viewDemand(@PathVariable("id") int id, Model model){
         model.addAttribute("demand", this.demandService.getDemandById(id));
-        model.addAttribute("listDemands", this.demandService.listDemands());
-        return "demand";
+        return "redirect:/demandView/{id}";	
     }
-    
     @InitBinder
 	public void initBinder(WebDataBinder binder) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
 
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
 
-	}
-
+	} 
+    @RequestMapping("/demandList")
+    public String demandList( Model model) {
+    	model.addAttribute("listDemands", this.demandService.listDemands());
+        return "demandList";
+    }
+    @RequestMapping("/demandView/{id}")
+    public String demandView(@PathVariable("id") int id,Model model) {
+        model.addAttribute("demand", this.demandService.getDemandById(id));
+        model.addAttribute("supply", this.demandService.getDemandById(id).getSupply());
+        
+    	model.addAttribute("listDemands", this.demandService.listDemands());
+//    	model.addAttribute("listSupply", this.
+    	
+    	
+        return "demandView";
+    }
 }

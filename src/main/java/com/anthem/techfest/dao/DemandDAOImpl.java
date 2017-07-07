@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.anthem.techfest.model.Demand;
+import com.anthem.techfest.model.Supply;
 
 @Repository
 public class DemandDAOImpl implements DemandDAO {
@@ -24,8 +25,36 @@ public class DemandDAOImpl implements DemandDAO {
 	@Override
 	public void addDemand(Demand d) {
 		Session session = this.sessionFactory.getCurrentSession();
-		session.persist(d);
+	session.persist(d);
 		logger.info("Demand saved successfully, Demand Details="+d);
+		/*	
+//		session.beginTransaction();
+
+//		Demand d = new Demand();
+		d.setProjectName("pr");
+		d.setLocation("loc");
+		d.setPrimarySkill("pr1");
+		d.setDemandStatus("open");
+		d.setTeam("team1");
+
+		session.save(d);
+		int demandId = d.getId();
+
+		Supply s = new Supply();
+		s.setResourceName("name1");
+		s.setSourcingType("type1");
+		s.setDemand(d);
+		
+		d.getSupply().add(s);
+
+		session.save(s);
+		
+		System.out.println("demandId="+demandId);
+		System.out.println("demandId from s="+s.getDemand().getId());
+
+//		session.getTransaction().commit();
+		System.out.println("Done");*/
+		
 	}
 
 	@Override

@@ -20,16 +20,22 @@
 <c:url var="feedbackAction" value="/feedback/${supply.id}" ></c:url>
 <form:form action="${feedbackAction}" commandName="supply">
 <table>
-<tr><textarea name="paragraph_text" cols="50" rows="10"></textarea></tr>
- <tr>
-		<td colspan="12">
-			
-			<input type="submit" value="<spring:message text="Submit Feedback"/>" />
-			
+
+<form:textarea path="feedback"  rows="10" cols="70" />
+	<tr>
+		<td colspan="2">
+			<c:if test="${!empty supply.feedback}">
+				<input type="submit"
+					value="<spring:message text="Update Feedback"/>" />
+			</c:if>
+			<c:if test="${empty supply.feedback}">
+				<input type="submit"
+					value="<spring:message text="Submit Feedback"/>" />
+			</c:if>
 		</td>
- </tr>
+	</tr>
  </table>
- <input type="hidden" name="id" value='${supply.id}'>
+ <input type="hidden" name="supply" value='${supply}'>
  </form:form>
 </body>
 </html>

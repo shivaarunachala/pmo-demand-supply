@@ -1,12 +1,16 @@
 package com.anthem.techfest.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -55,6 +59,22 @@ public class Demand {
 	private Date roleEndDate;
 	private boolean profileSharedClient;
 	private String roleID;
+	
+	@OneToMany(mappedBy="demand", fetch=FetchType.EAGER)
+	private Set<Supply> supply = new HashSet<Supply>(0);
+	
+//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "demand")
+	public Set<Supply> getSupply() {
+		return this.supply;
+	}
+
+	public void setSupply(Set<Supply> supply) {
+		this.supply = supply;
+	}
+
+	
+	
+	
 	
 	public int getId() {
 		return id;

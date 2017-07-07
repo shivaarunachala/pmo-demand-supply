@@ -1,10 +1,38 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <%@ page session="false" %>
 <html>
 <head>
 	<title>Demand Page</title>
+	
+	
+	 <meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  	<link rel="stylesheet" href="/resources/demos/style.css"> 
+	 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> 
+  	
+
+  
+  	<script>
+	  $( function() {
+	    $( "#datepicker" ).datepicker();
+	    $( "#datepicker1" ).datepicker();
+	    $( "#datepicker2" ).datepicker();
+	    $( "#datepicker3" ).datepicker();
+	  } );
+	  
+   </script>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+
+.mySlides {display: none}
+</style>
 	<style type="text/css">
 		.tg  {border-collapse:collapse;border-spacing:0;border-color:#ccc;}
 		.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#fff;}
@@ -12,10 +40,25 @@
 		.tg .tg-4eph{background-color:#f9f9f9}
 	</style>
 </head>
-<body>
+<body bgcolor=ECF3F3>
+
+<jsp:include page="header.jsp"/>
 <h1>
-	Add a Demand
+	<center>Add Demand</center> 
 </h1>
+ <nav class="navbar navbar-default">
+
+<div id="menu" bgcolor=fCF3F3>
+<h4> 	
+	<a href="<c:url value='/dashboard' />" class="w3-bar-item w3-button w3-padding-large">Home</a>
+	<sec:authorize access="hasRole('ROLE_PMO')">
+ 		<a href="<c:url value='/supply' />" class="w3-bar-item w3-button w3-padding-large">Supply</a>
+	</sec:authorize>
+    <a href="<c:url value='/demandList' />" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Demand List</a>
+    <a href="<c:url value='/supplyList' />" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Supply List</a>
+</h4>
+</div> 
+</nav>
 
 <c:url var="addAction" value="/demand/add" ></c:url>
 
@@ -94,7 +137,10 @@
 			</form:label>
 		</td>
 		<td>
-			<form:input path="chargeable" />
+			<form:select path="chargeable" >
+				<form:option value="false" label ="No"/>
+	   			<form:option value="true" label ="Yes"/>
+			</form:select>
 		</td>
 		<td>
 			<form:label path="sold">
@@ -128,7 +174,11 @@
 			</form:label>
 		</td>
 		<td>
-			<form:input path="flexCareerLevel" />
+			<form:select path="flexCareerLevel" >
+				<form:option value="false" label ="No"/>
+	   			<form:option value="true" label ="Yes"/>
+			</form:select>
+			
 		</td>
 		<td>
 			<form:label path="roleTitle">
@@ -224,7 +274,7 @@
 			</form:label>
 		</td>
 		<td>
-			<form:input path="demandCreatedDate" />
+			<form:input path="demandCreatedDate" id="datepicker"/>
 		</td>
 		<td>
 			<form:label path="roleStartDate">
@@ -232,7 +282,8 @@
 			</form:label>
 		</td>
 		<td>
-			<form:input path="roleStartDate" />
+			<form:input path="roleStartDate" id="datepicker1"/>
+						
 		</td>
 		<td>
 			<form:label path="roleEndDate">
@@ -240,7 +291,7 @@
 			</form:label>
 		</td>
 		<td>
-			<form:input path="roleEndDate" />
+			<form:input path="roleEndDate" id="datepicker2"/>
 		</td>
 	</tr>
 	<tr>
@@ -250,7 +301,7 @@
 			</form:label>
 		</td>
 		<td>
-			<form:input path="demandClosedDate" />
+			<form:input path="demandClosedDate" id="datepicker3"/>
 		</td>
 		<td>
 			<form:label path="clientInterview">
@@ -258,7 +309,10 @@
 			</form:label>
 		</td>
 		<td>
-			<form:input path="clientInterview" />
+			<form:select path="clientInterview" >
+				<form:option value="false" label="Pending"/>
+   				<form:option value="true" label="Completed"/>
+			</form:select>
 		</td>
 		<td>
 			<form:label path="profileSharedClient">
@@ -266,7 +320,10 @@
 			</form:label>
 		</td>
 		<td>
-			<form:input path="profileSharedClient" />
+			<form:select path="profileSharedClient" >
+				<form:option value="false" label ="Not Yet"/>
+	   			<form:option value="true" label ="Yes"/>
+			</form:select>
 		</td>
 	</tr>
 	<tr>
@@ -276,7 +333,10 @@
 			</form:label>
 		</td>
 		<td>
-			<form:input path="resourceLocked" />
+			<form:select path="resourceLocked" >
+				<form:option value="false" label ="No"/>
+	   			<form:option value="true" label ="Yes"/>
+			</form:select>
 		</td>
 		<td>
 			<form:label path="comments">
@@ -314,6 +374,8 @@
 		</td>		
 	</tr>
 	<tr>
+	</tr>
+	<tr>
 		<td colspan="2">
 			<c:if test="${!empty demand.projectName}">
 				<input type="submit"
@@ -327,31 +389,7 @@
 	</tr>
 </table>	
 </form:form>
-<br>
-<h3>Demands List</h3>
-<c:if test="${!empty listDemands}">
-	<table class="tg">
-	<tr>
-		<th width="60">Demand ID</th>
-		<th width="120">Project Name</th>
-		<th width="120">Location</th>
-		<th width="60">RRD No</th>
-		<th width="60">Edit</th>
-		<th width="60">Delete</th>
-		<th width="60">View</th>
-	</tr>
-	<c:forEach items="${listDemands}" var="demand">
-		<tr>
-			<td>${demand.id}</td>
-			<td>${demand.projectName}</td>
-			<td>${demand.location}</td>
-			<td>${demand.rrdNo}</td>
-			<td><a href="<c:url value='/editDemand/${demand.id}' />" >Edit</a></td>
-			<td><a href="<c:url value='/removeDemand/${demand.id}' />" >Delete</a></td>
-			<td><a href="<c:url value='/viewDemand/${demand.id}' />" >View</a></td>
-		</tr>
-	</c:forEach>
-	</table>
-</c:if>
+
+
 </body>
 </html>

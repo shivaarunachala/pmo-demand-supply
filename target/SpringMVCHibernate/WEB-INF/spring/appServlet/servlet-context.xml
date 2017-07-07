@@ -13,7 +13,7 @@
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
 
-	<context:component-scan base-package="com.journaldev.spring, com.anthem.techfest" />
+	<context:component-scan base-package="com.anthem.spring, com.anthem.techfest" />
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
 		up static resources in the ${webappRoot}/resources directory -->
@@ -52,7 +52,7 @@
 		<beans:property name="dataSource" ref="dataSource" />
 		<beans:property name="annotatedClasses">
 			<beans:list>
-				<beans:value>com.journaldev.spring.model.AppUser</beans:value>
+				<beans:value>com.anthem.spring.model.AppUser</beans:value>
 				<beans:value>com.anthem.techfest.model.Demand</beans:value>
 				<beans:value>com.anthem.techfest.model.Supply</beans:value>
 			</beans:list>
@@ -66,10 +66,10 @@
 		</beans:property>
 	</beans:bean>
 	
-	<beans:bean id="appUserDAO" class="com.journaldev.spring.dao.AppUserDAOImpl">
+	<beans:bean id="appUserDAO" class="com.anthem.spring.dao.AppUserDAOImpl">
 		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
-	<beans:bean id="appUserService" class="com.journaldev.spring.service.AppUserServiceImpl">
+	<beans:bean id="appUserService" class="com.anthem.spring.service.AppUserServiceImpl">
 		<beans:property name="appUserDAO" ref="appUserDAO"></beans:property>
 	</beans:bean>
 	
